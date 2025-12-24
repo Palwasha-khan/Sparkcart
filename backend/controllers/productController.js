@@ -39,6 +39,8 @@ export const getProducts = catchAsyncErrors(async (req,res) => {
 export const newProducts = catchAsyncErrors(async (req,res) => {
 
   try {
+  req.body.user = req.body._id; 
+   
   const product = await Product.create(req.body);
   res.status(201).json({
     success: true,
