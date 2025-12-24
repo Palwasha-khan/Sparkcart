@@ -1,4 +1,4 @@
-const products = [
+const Products = [
   {
     name: "Golden Pearl Bracelet",
     price: 2999,
@@ -135,4 +135,4 @@ const products = [
   }
 ];
 
-export default products;
+export default Products;

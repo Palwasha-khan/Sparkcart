@@ -1,30 +1,36 @@
 import ErrorHandler from "../utils/errorHandler.js";
 
-export default (err,req ,res,next) => {
-    let error ={
-        statusCode:err?.statusCode || 500,
-        message: err?.message || "Internal Server Error",
-    };
+export default (err, req, res, next) => {
 
-    //Handle Invalid Mongoose id error
-    if(err.name === 'CastError'){
-        const message = `resource not found. Invalid: ${err?.path}`
-        error = new ErrorHandler(message,404)
-    }
+  // Prevent sending response twice
+  if (res.headersSent) {
+    return next(err);
+  }
 
-    if(process.env.NODE_ENV === "DEVELOPMENT"){
-         res.status(error.statusCode).json({
-        message:error.message,
-        error:err,
-        stack:err?.stack,
-    })
-    }
+  let error = {
+    statusCode: err.statusCode || 500,
+    message: err.message || "Internal Server Error",
+  };
 
-     if(process.env.NODE_ENV === "PRODUCTION"){
-         res.status(error.statusCode).json({
-        message:error.message,
-    })
-    }
+  // Handle invalid mongoose ObjectId
+  if (err.name === "CastError") {
+    const message = `Resource not found. Invalid: ${err.path}`;
+    error = new ErrorHandler(message, 404);
+  }
 
-   
-}
+  // DEVELOPMENT
+  if (process.env.NODE_ENV === "DEVELOPMENT") {
+    return res.status(error.statusCode).json({
+      success: false,
+      message: error.message,
+      error: err,
+      stack: err.stack,
+    });
+  }
+
+  // PRODUCTION
+  return res.status(error.statusCode).json({
+    success: false,
+    message: error.message,
+  });
+};

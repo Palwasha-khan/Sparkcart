@@ -1,7 +1,7 @@
 import express from 'express'
 const app = express()
 import dotenv from 'dotenv'
-import {connectDb} from "./config/dbConnect.js"
+import connectDb from "./config/dbConnect.js"
 import errorMiddleware from "./middleware/error.js"
 
 //handle uncaught exception
@@ -21,8 +21,10 @@ app.use(express.json())
 //import all routes
 
 import productRoutes from "./routes/products.js"
- 
+import authRoutes from "./routes/auth.js" 
+
 app.use("/api/v1",productRoutes)
+app.use("/api/v1",authRoutes)
 
 //using error middleware
 app.use(errorMiddleware);
