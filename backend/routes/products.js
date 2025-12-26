@@ -1,5 +1,5 @@
 import express from 'express';
-import { deleteProduct, getProductDeatils, getProducts, newProducts, updateProductDeatils } from '../controllers/productController.js';
+import { createProductReview, deleteProduct, deleteReview, getProductDeatils, getProductReview, getProducts, newProducts, updateProductDeatils } from '../controllers/productController.js';
 import { authorizeRoles, isAthenticatedUser } from '../middleware/auth.js';
 const router = express.Router();
 
@@ -11,5 +11,13 @@ router.route("/admin/product/:id")
         .put(isAthenticatedUser, authorizeRoles("admin"),updateProductDeatils);
 router.route("/admin/product/:id")
         .delete(isAthenticatedUser, authorizeRoles("admin"),deleteProduct);
+
+router.route("/reviews")
+.get(isAthenticatedUser,getProductReview)
+.put(isAthenticatedUser,createProductReview);
+
+router.route("/admin/reviews")
+        .delete(isAthenticatedUser, authorizeRoles("admin"),deleteReview);
+
 
 export default router;
