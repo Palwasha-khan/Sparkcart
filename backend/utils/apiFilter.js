@@ -16,23 +16,33 @@ class APIFilters{
     return this;
 }
 
-
 filters() {
-    const queryCopy = { ...this.queryStr};
+  const queryCopy = { ...this.queryStr }
 
-    //fields to remove
-    const fieldsToRemove = ["keyword","page"];
-    fieldsToRemove.forEach((el) => delete queryCopy[el]);
-    
-    //advance filter for price and rating
-    
+  // Remove non-filter fields
+  const removeFields = ['keyword', 'page']
+  removeFields.forEach(el => delete queryCopy[el])
 
-    let queryStr = JSON.stringify(queryCopy);
-    queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`)
-    console.log(queryCopy)
-    this.query = this.query.find(JSON.parse(queryStr))
-    return this;
+  const mongoQuery = {}
+
+  for (let key in queryCopy) {
+    if (key.includes('[')) {
+      const [field, operator] = key.split('[')
+      const mongoOperator = `$${operator.replace(']', '')}`
+
+      mongoQuery[field] = {
+        [mongoOperator]: Number(queryCopy[key])
+      }
+    } else {
+      mongoQuery[key] = queryCopy[key]
+    }
+  }
+ 
+  this.query = this.query.find(mongoQuery)
+  return this
 }
+
+
 
 pagination(resPerPage) {
     const currentPage = Number(this.queryStr.page) || 1;

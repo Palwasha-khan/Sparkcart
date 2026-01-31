@@ -4,37 +4,31 @@ import ErrorHandler from "../utils/errorHandler.js";
 import APIFilters from "../utils/apiFilter.js";
 import mongoose from "mongoose";
 
-
 // products => /api/v1/products
-export const getProducts = catchAsyncErrors(async (req,res) => {
-    
-    try {
-        const resPerPage = 4;
-        const apiFilters = new APIFilters(Product,req.query).search().filters();
+export const getProducts = catchAsyncErrors(async (req, res,next) => {
+ 
+    const resPerPage = 4;
 
-        let products = await apiFilters.query;
-        let filterProductscount = products.length
-        // const products = await Product.find();
+    const apiFilters = new APIFilters(Product, req.query)
+        .search()
+        .filters();
 
-        apiFilters.pagination(resPerPage);
-        products = await apiFilters.query.clone();
+    let products = await apiFilters.query;
+    let filterProductscount = products.length;
+ 
+ 
+    apiFilters.pagination(resPerPage);
+    products = await apiFilters.query.clone();
 
-         res.status(200).json({
-            resPerPage,
-            filterProductscount,
-            products,
-    })
-    } catch (error) {
-        res.status(400).json({
-    success: false,
-    message: error.message
-  });
-    }
 
     res.status(200).json({
-        message: "All products",
-    })
-})
+        success: true,
+        resPerPage,
+        filterProductscount,
+        products,
+    });
+});
+
 
 //create new products => /api/v1/admin/products
 export const newProducts = catchAsyncErrors(async (req,res) => {
