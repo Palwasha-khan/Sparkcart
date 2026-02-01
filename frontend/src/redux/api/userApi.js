@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { setUser, setIsAuthenticated,logout } from "../features/userSlice"; 
+import { setUser, setIsAuthenticated,logout, setLoading } from "../features/userSlice"; 
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
@@ -16,9 +16,10 @@ export const userApi = createApi({
           const { data } = await queryFulfilled;
           dispatch(setUser(data));
           dispatch(setIsAuthenticated(true));
+          dispatch(setLoading(false));
         } catch (err) {
           console.log(err);
-          dispatch(logout());
+          dispatch(setLoading(false)); 
         }
       },
       providesTags: ["User"],
@@ -33,9 +34,28 @@ export const userApi = createApi({
           }
        },
        invalidatesTags:["User"],
+    }),
+    uploadAvatar: builder.mutation({
+        query(body) {
+          return{
+            url:"/me/upload_avatar",
+            method:"PUT",
+            body,  
+          }
+       },
+       invalidatesTags:["User"],
+    }),
+     updatePasssword: builder.mutation({
+        query(body) {
+          return{
+            url:"/password/update",
+            method:"PUT",
+            body,  
+          }
+       }, 
     })
 
   }),
 });
 
-export const { useGetMeQuery, useUpdateProfileMutation} = userApi
+export const { useGetMeQuery, useUpdateProfileMutation , useUploadAvatarMutation, useUpdatePassswordMutation} = userApi

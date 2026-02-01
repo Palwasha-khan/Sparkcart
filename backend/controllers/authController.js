@@ -1,5 +1,6 @@
 import catchAsyncErrors from "../middleware/catchAsyncErrors.js"
 import User from "../models/user.js"
+import { upload_file } from "../utils/cloudinary.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import sendToken from "../utils/sendToken.js";
 
@@ -53,6 +54,19 @@ export const logoutUser = catchAsyncErrors(async(req,res,next)=>{
     })
 })
  
+//upload avatar  => api/v1/me/upload_avatar
+export const uploadAvatar = catchAsyncErrors(async(req,res,next)=>{
+     const avatarResponse = await upload_file(req.body.avatar, "shopit/avatars")
+
+     const user = await User.findByIdAndUpdate(req?.user?._id,{
+        avatar: avatarResponse,
+     })
+     
+    res.status(200).json({
+        message:"logged out",
+    })
+})
+
 //get current user profile =>/api/v1/me
 export const getUserProfile = catchAsyncErrors(async(req,res,next) =>{
     const user = await User.findById(req?.user?._id);

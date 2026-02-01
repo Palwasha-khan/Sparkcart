@@ -1,5 +1,5 @@
 import express from 'express';
-import { allUsers, deleteUser, getUserDetail, getUserProfile, loginUser, logoutUser, registerUser, updatePassword, updateProfile, updateUser } from '../controllers/authController.js';
+import { allUsers, deleteUser, getUserDetail, getUserProfile, loginUser, logoutUser, registerUser, updatePassword, updateProfile, updateUser, uploadAvatar } from '../controllers/authController.js';
  const router = express.Router();
  import { isAthenticatedUser } from '../middleware/auth.js';
 import { getProductDeatils } from '../controllers/productController.js';
@@ -11,6 +11,7 @@ router.route("/logout").get(logoutUser);
 router.route("/me").get(isAthenticatedUser,getUserProfile);
 router.route("/password/update").put(isAthenticatedUser,updatePassword);
 router.route("/me/update").put(isAthenticatedUser,updateProfile);
+router.route("/me/upload_avatar").put(isAthenticatedUser,uploadAvatar);
  
 router
  .route("/admin/users").get(isAthenticatedUser,allUsers);
