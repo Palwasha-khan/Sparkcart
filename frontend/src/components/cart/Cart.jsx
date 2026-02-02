@@ -1,12 +1,13 @@
 import React from 'react'
 import MetaData from '../layout/Metadata'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { setCartItem ,removeCartItem} from '../../redux/features/cartSlice';
 
 const Cart = () => {
     const {cartItems} = useSelector((state)=> state.cart)
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
         const totalItems = cartItems.reduce(
         (acc, item) => acc + item.quantity,
@@ -38,7 +39,7 @@ const Cart = () => {
     product: item.product,
     name: item.name,
     price: item.price,
-    image: item.image,
+    image: item.image|| [{ url: item.image }],
     stock: item.stock,
     quantity: newQty,
   };
@@ -48,6 +49,11 @@ const Cart = () => {
   const removeCartItemHandler = (id) =>{
     dispatch(removeCartItem(id))
   }
+
+  const checkoutHandler = ()=>{
+    navigate("/shipping");
+  }
+
 
   return (
      <>
@@ -121,7 +127,7 @@ const Cart = () => {
             {" "}
             ${totalPrice.toFixed(2)}</span></p>
           <hr />
-          <button id="checkout_btn" className="btn btn-primary w-100">
+          <button id="checkout_btn" className="btn btn-primary w-100" onClick={checkoutHandler}>
             Check out
           </button>
         </div>

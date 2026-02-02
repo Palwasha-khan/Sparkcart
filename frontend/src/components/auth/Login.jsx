@@ -8,12 +8,12 @@ const Login = () => {
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
 
-    const navigate = useNavigate();
+  
 
     const [login,{isLoading,error, data}] = useLoginMutation();
     const{isAuthenticated} = useSelector((state) => state.auth)
 
-    
+    const navigate = useNavigate();
     
      useEffect(() => {
 
