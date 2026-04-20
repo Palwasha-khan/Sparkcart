@@ -3,10 +3,12 @@ import { useParams} from 'react-router-dom'
 import {useGetProductDetailsQuery} from '../../redux/api/productApi'
 import Loader from '../layout/Loader'
 import StarRatings from "react-star-ratings";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCartItem } from '../../redux/features/cartSlice';
 import toast from 'react-hot-toast';
 import MetaData from '../layout/Metadata';
+import NewReview from '../review/NewReview';
+import ListReview from '../review/ListReview';
 
 const ProductDetails = () => {
   const params = useParams();
@@ -17,6 +19,7 @@ const ProductDetails = () => {
     useGetProductDetailsQuery(params?.id);
 
   const product = data?.product;
+  const {isAuthenticated} = useSelector((state) => state.auth)
 
   const [activeImg, setActiveImg] = useState("");
 
@@ -154,11 +157,14 @@ const ProductDetails = () => {
         <hr />
         <p id="product_seller mb-3">Sold by: <strong>{product?.seller}</strong></p>
 
+        {isAuthenticated ? <NewReview productId={product?._id} />:
         <div className="alert alert-danger my-5" type="alert">
           Login to post your review.
-        </div>
+        </div>}
       </div>
     </div>
+    {product?.reviews?.length > 0 && (
+        <ListReview reviews={product?.reviews}/>)}
     </>
   )
 }

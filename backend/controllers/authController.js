@@ -63,7 +63,7 @@ export const uploadAvatar = catchAsyncErrors(async(req,res,next)=>{
      })
      
     res.status(200).json({
-        message:"logged out",
+        user,
     })
 })
 
