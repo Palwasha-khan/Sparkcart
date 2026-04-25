@@ -3,6 +3,7 @@ import catchAsyncErrors from "../middleware/catchAsyncErrors.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import APIFilters from "../utils/apiFilter.js";
 import mongoose from "mongoose";
+import Order from "../models/order.js";
 
 // products => /api/v1/products
 export const getProducts = catchAsyncErrors(async (req, res,next) => {
@@ -53,7 +54,8 @@ export const newProducts = catchAsyncErrors(async (req,res) => {
 export const getProductDeatils = catchAsyncErrors(async (req,res,next) => {
 
   try {
-  const product = await Product.findById(req?.params?.id);
+  const product = await Product.findById(req.params.id)
+  .populate("reviews.user", "name");
 
   if(!product){
     return next(new ErrorHandler("product not found",404));
@@ -139,22 +141,24 @@ export const createProductReview = catchAsyncErrors(async (req, res, next) => {
   );
 
   if (isReviewed) {
-    product.reviews.forEach((review) => {
-      if (review.user.toString() === req.user._id.toString()) {
-        review.comment = comment;
-        review.rating = Number(rating);
-      }
-    });
-  } else {
-    product.reviews.push(review);
-    product.numberOfReviews = product.reviews.length;
-  }
+  product.reviews.forEach((rev) => {
+    if (rev.user.toString() === req.user._id.toString()) {
+      rev.comment = comment;
+      rev.rating = Number(rating);
+    }
+  });
+} else {
+  product.reviews.push(review);
+}
 
-  product.ratings =
-    product.reviews.reduce((acc, item) => acc + item.rating, 0) /
-    product.reviews.length;
+// ✅ ALWAYS update
+product.numOfReviews = product.reviews.length;
 
-  await product.save({ validateBeforeSave: false });
+product.rating =
+  product.reviews.reduce((acc, item) => acc + item.rating, 0) /
+  product.reviews.length;
+
+await product.save({ validateBeforeSave: false });
 
   res.status(200).json({
     success: true,
@@ -212,4 +216,38 @@ export const deleteReview = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
   });
+});
+
+
+// Get can user review => /api/v1/can_review
+export const canUserReview = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const { productId } = req.query;
+
+    // 1. Validation Check
+    if (!productId) {
+        return res.status(400).json({ message: "Product ID is required" });
+    }
+
+   
+    // 2. Convert to ObjectId safely
+    const productObjectId = new mongoose.Types.ObjectId(productId);
+
+    // 3. Find Orders
+    const orders = await Order.find({
+      user: req.user._id,
+      "orderItems.product": productObjectId,
+    });
+
+    
+    // 4. Return Response
+    res.status(200).json({
+      canReview: orders.length > 0,
+    });
+
+  } catch (error) {
+    console.error("Internal Function Error:", error.message);
+    // Pass the error to your global error handler
+    next(error); 
+  }
 });

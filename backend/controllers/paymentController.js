@@ -131,4 +131,6 @@ export const stripeWebhook = catchAsyncErrors(async (req, res,next) => {
     console.log("WEBHOOK ERROR:", error.message);
     return res.status(400).send(`Webhook Error: ${error.message}`);
 }
-})
+}
+)
+// stripe listen --events checkout.session.completed --forward-to localhost:3000/api/v1/payment/webhook

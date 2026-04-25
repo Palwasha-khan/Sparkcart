@@ -20,7 +20,8 @@ const ProductDetails = () => {
 
   const product = data?.product;
   const {isAuthenticated} = useSelector((state) => state.auth)
-
+   console.log("PRODUCT:", product); 
+   console.log("REVIEWS:", product?.reviews);
   const [activeImg, setActiveImg] = useState("");
 
   useEffect(() => {
@@ -31,7 +32,7 @@ const ProductDetails = () => {
 
   
   useEffect(() => {
-    if (!product) return;
+     
 
     setActiveImg(
       product?.images?.[0]?.url
@@ -108,14 +109,17 @@ const ProductDetails = () => {
 
         <div className="d-flex">
          <StarRatings
-                        rating={product?.ratings}
-                        starRatedColor="#ffb829" 
-                        numberOfStars={5}
-                        name='rating'
-                        starDimension="22px"
-                        starSpacing="1px"
-                        />
-          <span id="no-of-reviews" className="pt-1 ps-2"> ({product?.numOfReviews} Reviews) </span>
+            rating={product?.rating || 0}
+            starRatedColor="#ffb829"
+            numberOfStars={5}
+            name="rating"
+            starDimension="22px"
+            starSpacing="1px"
+          />
+
+          <span>
+            ({product?.numOfReviews } Reviews)
+          </span>
         </div>
         <hr />
 
@@ -157,14 +161,16 @@ const ProductDetails = () => {
         <hr />
         <p id="product_seller mb-3">Sold by: <strong>{product?.seller}</strong></p>
 
-        {isAuthenticated ? <NewReview productId={product?._id} />:
-        <div className="alert alert-danger my-5" type="alert">
+        {isAuthenticated ?( <NewReview productId={product?._id} />):
+       ( <div className="alert alert-danger my-5" type="alert">
           Login to post your review.
-        </div>}
+        </div>)}
       </div>
     </div>
+    <div className="row d-flex justify-content-around">
     {product?.reviews?.length > 0 && (
-        <ListReview reviews={product?.reviews}/>)}
+        <ListReview reviews={product?.reviews || []} />)} 
+    </div>
     </>
   )
 }
