@@ -15,6 +15,9 @@ const OrderDetails = () => {
         shippingInfo,orderItems,paymentInfo,user,totalAmount,orderStatus
     } = order || {}
 
+    // check if order status is paid or not
+    const ispaid = paymentInfo?.status === "paid" ? true : false
+
     useEffect(() => {
  
         if (error) {
@@ -76,7 +79,7 @@ const OrderDetails = () => {
           <tbody>
             <tr>
               <th scope="row">Status</th>
-              <td className="greenColor">
+              <td className={ispaid ? "greenColor" : "redColor"} >
                 <b>{paymentInfo?.status}</b>
               </td>
             </tr>

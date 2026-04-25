@@ -1,26 +1,35 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import MetaData from '../layout/Metadata'
 import CheckoutSteps from './CheckoutSteps'
 import { useSelector } from 'react-redux'
 import { calculateOrderCost } from '../../helpers/helpers'
-import {useCreateNewOrderMutation} from "../../redux/api/orderApi"
+import {useCreateNewOrderMutation, useStripeCheckoutSessionMutation} from "../../redux/api/orderApi"
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
 const PaymentMethod = () => {
-    const [method,setMethod] = useState("")
-    
-    const {cartItems,shippingInfo} = useSelector((state) => state.cart)
 
+    const [method,setMethod] = useState("")
+    const {cartItems,shippingInfo} = useSelector((state) => state.cart)
     const [createNewOrder ,{isLoading, error,isSuccess }] = useCreateNewOrderMutation()
-    const {itemsPrice,shippingPrice,taxPrice,totalPrice,} = 
-       calculateOrderCost(cartItems)
+    const [stripeCheckoutSession,{data: CheckoutData,error: checkoutError,isLoading: loading}] = useStripeCheckoutSessionMutation()
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if(CheckoutData){
+          window.location.href = CheckoutData?.url;
+        }
+        if(checkoutError){
+          toast.error(checkoutError?.data?.message || 'Something went wrong during checkout') 
+        }
+        }, [CheckoutData, checkoutError]);
+    
         
-         useEffect(() => {
+    useEffect(() => {
     
           if(isSuccess){ 
              toast.success( "order Confirmed");
+             
             navigate("/me/orders?order_success=true");
           }
             if (error) {
@@ -32,18 +41,20 @@ const PaymentMethod = () => {
     const submitHandler = (e) =>{
         e.preventDefault(); 
 
-        if(method == "COD"){   
-              const orderItemsWithImages = cartItems.map(item => ({
-              product: item._id || item.product,   // required by backend
-              name: item.name,
-              price: item.price,
-              quantity: item.quantity,
-              images: typeof item.images === "string" ? item.images : item.image || "https://via.placeholder.com/150"
-            }));
+        const {itemsPrice,shippingPrice,taxPrice,totalPrice,} =  calculateOrderCost(cartItems)
+   
+
+        if(method === "COD"){   
 
               const orderData = {
                 shippingInfo,
-                orderItems:orderItemsWithImages,
+                 orderItems: cartItems.map(item => ({
+                    product: item._id || item.product,
+                    name: item.name,
+                    price: item.price,
+                    quantity: item.quantity,
+                    images: item.image || item.images || "https://via.placeholder.com/150", // ✅ REQUIRED
+                })),
                 itemsPrice,
                 taxAmount:taxPrice,
                 ShippingAmount:shippingPrice,
@@ -57,8 +68,23 @@ const PaymentMethod = () => {
             createNewOrder(orderData);
 
         }
-        if(method == "Card"){
-            
+        if(method === "Card"){
+            const orderData = {
+                shippingInfo,
+                orderItems: cartItems.map(item => ({
+                    product: item._id || item.product,
+                    name: item.name,
+                    price: item.price,
+                    quantity: item.quantity,
+                    images: item.image || item.images || "https://via.placeholder.com/150", // ✅ REQUIRED
+                })),
+                itemsPrice,
+                taxAmount:taxPrice,
+                ShippingAmount:shippingPrice,
+                totalAmount:totalPrice,      
+            }
+
+            stripeCheckoutSession(orderData)
         }
     }
 
@@ -99,7 +125,7 @@ const PaymentMethod = () => {
             </label>
           </div>
 
-          <button id="shipping_btn" type="submit" className="btn py-2 w-100" disabled={!method}>
+          <button id="shipping_btn" type="submit" className="btn py-2 w-100" disabled={loading || method === ""}>
             CONTINUE
           </button>
         </form>

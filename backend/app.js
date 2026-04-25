@@ -17,18 +17,24 @@ dotenv.config({ path: "backend/config/config.env"});
 //connect database
 connectDb();
 
-app.use(express.json())
+app.use(express.json({
+    verify: (req, res, buf) => {
+        req.rawBody = buf.toString();
+    },
+}))
 app.use(cookieParser())
 
 //import all routes
 
 import productRoutes from "./routes/products.js"
 import authRoutes from "./routes/auth.js"
-import orderRoutes from "./routes/order.js"  
+import orderRoutes from "./routes/order.js" 
+import paymentRoutes from "./routes/payment.js" 
 
 app.use("/api/v1",productRoutes)
 app.use("/api/v1",authRoutes)
 app.use("/api/v1",orderRoutes)
+app.use("/api/v1",paymentRoutes)
 
 //using error middleware
 app.use(errorMiddleware);

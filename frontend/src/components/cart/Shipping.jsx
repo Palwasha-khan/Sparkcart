@@ -25,7 +25,7 @@ const Shipping = () => {
             setAddress(shippingInfo?.address);
             setCity(shippingInfo?.city);
             setZipCode(shippingInfo?.zipCode);
-            setCountry(shippingInfo?.country);
+            setCountry(shippingInfo?.country || "");
             setPhoneNo(shippingInfo?.phoneNo);
         }
     },[shippingInfo])
@@ -107,8 +107,15 @@ const Shipping = () => {
               className="form-select"
               name="country"
               required
-              value={country}
-              onChange={(e)=>setCountry(e.target.value)}
+              value={shippingInfo?.country || ""}
+              onChange={(e) =>
+                dispatch(
+                  saveShippingInfo({
+                    ...shippingInfo,
+                    country: e.target.value,
+                  })
+                )
+              }
             >
                 {countriesList?.map((country) => (
                     <option key={country?.name} value={country?.name} >

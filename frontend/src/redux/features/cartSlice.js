@@ -25,7 +25,10 @@ export const cartSlice = createSlice({
           i.product === isItemExist.product ? item : i
         );
       } else {
-        state.cartItems.push(item); // ✅ keep array
+         state.cartItems.push({
+      ...item,
+      images: item.images, // ✅ ADD THIS HERE
+      });
       }
 
       localStorage.setItem(

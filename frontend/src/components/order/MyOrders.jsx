@@ -33,7 +33,7 @@ const MyOrders = () => {
             columns: [
             { label: "ID", field: "id", sort: "asc" },
             { label: "Amount", field: "amount", sort: "asc" },
-            { label: "Payment Status", field: "paymentStatus", sort: "asc" },
+            { label: "Payment Status", field: "status", sort: "asc" },
             { label: "Order Status", field: "orderStatus", sort: "asc" },
             { label: "Actions", field: "actions" },
             ],
@@ -44,7 +44,9 @@ const MyOrders = () => {
             orders.rows.push({
                 id: order?._id,
                 amount: `$${order?.totalAmount}`,
-                status: order?.paymentInfo?.status?.toUpperCase(),
+               status: order?.paymentInfo?.status
+                ? order.paymentInfo.status.toUpperCase()
+                : "NOT PAID",
                 orderStatus: order?.orderStatus,
                 actions: (
                     <>
