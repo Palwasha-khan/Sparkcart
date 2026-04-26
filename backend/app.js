@@ -18,10 +18,12 @@ dotenv.config({ path: "backend/config/config.env"});
 connectDb();
 
 app.use(express.json({
+    limit: '100mb',
     verify: (req, res, buf) => {
         req.rawBody = buf.toString();
     },
 }))
+app.use(express.urlencoded({ limit: '100mb', extended: true }));
 app.use(cookieParser())
 
 //import all routes
@@ -40,6 +42,7 @@ app.use("/api/v1",paymentRoutes)
 app.use(errorMiddleware);
 
 const server = app.listen(process.env.PORT,()=>{
+    server.timeout = 600000;
     console.log(`server started on port : ${process.env.PORT} in ${process.env.NODE_ENV} mode`)
 })
 

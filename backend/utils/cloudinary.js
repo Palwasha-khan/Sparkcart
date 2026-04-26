@@ -11,17 +11,21 @@ cloudinary.config({
 
 export const upload_file = (file, folder) => {
   return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(
+    cloudinary.v2.uploader.upload(
       file,
-      (result) => {
+      {
+        resource_type: "auto",
+        folder,
+      },
+      (error, result) => {  
+        if (error) {
+          console.log("Cloudinary Error:", error);
+          return reject(error);
+        }
         resolve({
           public_id: result.public_id,
           url: result.url,
         });
-      },
-      {
-        resource_type: "auto",
-        folder,
       }
     );
   });

@@ -69,9 +69,11 @@ const logoutHandler = async () => {
           </button>
 
           <div className="dropdown-menu w-100">
-            <Link className="dropdown-item" to="/admin/dashboard">
-              Dashboard
-            </Link>
+            {user?.role === "admin" && (
+              <Link className="dropdown-item" to="/admin/dashboard">
+                Dashboard
+              </Link>
+            )}
             <Link className="dropdown-item" to="/me/orders">
               Orders
             </Link>
