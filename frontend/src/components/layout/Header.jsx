@@ -12,10 +12,12 @@ function Header() {
 });
 
 
-   const auth = useSelector((state) => state.auth || {});
-   const {cartItems} = useSelector((state) => state.cart || {});
+ const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
 
-   const user = auth.user;
+// Debugging: Add this to see what is happening in the Header specifically
+console.log("Header State -> Auth:", isAuthenticated, "User:", user?.name); const {cartItems} = useSelector((state) => state.cart || {});
+
+ 
    const navigate = useNavigate();
   const [logout] = useLogoutMutation();
 

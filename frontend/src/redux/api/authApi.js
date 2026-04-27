@@ -17,8 +17,7 @@ endpoints: (builder) => ({
        async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled; 
-          await dispatch(userApi.endpoints.getMe.initiate(null));
-        } catch (error) {
+       await dispatch(userApi.endpoints.getMe.initiate(null, { subscribe: false, forceRefetch: true })); } catch (error) {
           console.log(error);
         }
       }, 
@@ -30,11 +29,11 @@ endpoints: (builder) => ({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["User"],
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled; 
-          await dispatch(userApi.endpoints.getMe.initiate(null));
-        } catch (error) {
+      await dispatch(userApi.endpoints.getMe.initiate(null, { subscribe: false, forceRefetch: true })); } catch (error) {
           console.log(error);
         }
       },

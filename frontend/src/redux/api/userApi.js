@@ -14,11 +14,19 @@ export const userApi = createApi({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          dispatch(setUser(data));
-          dispatch(setIsAuthenticated(true));
-          dispatch(setLoading(false));
+          console.log("Raw Data from Backend:", data); // Check your console for this!
+          if (data) {
+        dispatch(setUser(data));
+        dispatch(setIsAuthenticated(true));
+        } else {
+          // If data is null, the user isn't actually logged in
+          dispatch(setUser(null));
+          dispatch(setIsAuthenticated(false));
+        }
+         dispatch(setLoading(false));
         } catch (err) {
           console.log(err);
+          dispatch(setIsAuthenticated(false));
           dispatch(setLoading(false)); 
         }
       },

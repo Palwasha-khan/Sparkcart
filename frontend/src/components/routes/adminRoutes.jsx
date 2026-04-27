@@ -6,6 +6,7 @@ import ListProducts from '../dashboard/ListProducts';
 import NewProduct from '../dashboard/NewProduct';
 import UpdateProduct from '../dashboard/UpdateProduct';
 import UploadImages from '../dashboard/UploadImages';
+import ListUsers from '../dashboard/ListUsers';
 const adminRoutes = () => {
   return (
     <>
@@ -14,7 +15,9 @@ const adminRoutes = () => {
       
     <Route path="/admin/products" element={
                 <ProtectedRoute admin={true}><ListProducts/></ProtectedRoute>} />
-                
+    <Route path="/admin/users" element={
+                <ProtectedRoute admin={true}><ListUsers/></ProtectedRoute>} />
+               
 
     <Route path="/admin/product/new" element={
                 <ProtectedRoute admin={true}><NewProduct/></ProtectedRoute>} />
