@@ -105,7 +105,7 @@ await product.save({ validateBeforeSave: false });
 //get products reviews => /api/v1/reviews
 export const getProductReview = catchAsyncErrors(async (req, res, next) => {
 
-  const product = await Product.findById(req.query.id);
+  const product = await Product.findById(req.query.id).populate("reviews.user");
 
   if (!product) {
     return next(new ErrorHandler("product not found", 404));
@@ -115,43 +115,39 @@ export const getProductReview = catchAsyncErrors(async (req, res, next) => {
     reviews:product.reviews,
   });
 });
+
+//delete reviews
 export const deleteReview = catchAsyncErrors(async (req, res, next) => {
   const { productId, id } = req.query;
-
-  if (!mongoose.Types.ObjectId.isValid(productId)) {
-    return next(new ErrorHandler("Invalid product ID", 400));
-  }
 
   let product = await Product.findById(productId);
 
   if (!product) {
-    return next(new ErrorHandler("product not found", 404));
+    return next(new ErrorHandler("Product not found", 404));
   }
 
-  const reviews = product.reviews.filter(
+  // 1. Filter the reviews
+  const filteredReviews = product.reviews.filter(
     (review) => review._id.toString() !== id.toString()
   );
 
-  const numberOfReviews = reviews.length;
+  // 2. Update the product object fields directly
+  product.reviews = filteredReviews;
+  product.numOfReviews = filteredReviews.length;
 
-  const ratings =
-    numberOfReviews === 0
+  // 3. Recalculate ratings
+  product.ratings =
+    product.numOfReviews === 0
       ? 0
-      : reviews.reduce((acc, item) => acc + item.rating, 0) /
-        numberOfReviews;
+      : filteredReviews.reduce((acc, item) => acc + item.rating, 0) /
+        product.numOfReviews;
 
-  await Product.findByIdAndUpdate(
-    productId,
-    {
-      reviews,
-      numberOfReviews,
-      ratings,
-    },
-    { new: true }
-  );
+  // 4. 🔥 Use .save() instead of findByIdAndUpdate
+  await product.save({ validateBeforeSave: false });
 
   res.status(200).json({
     success: true,
+    product // Send this back so you can see the change in Postman
   });
 });
 
@@ -297,8 +293,7 @@ try {
     await product.save({ validateBeforeSave: false });
 
     res.status(200).json({ success: true, product });
-  } catch (error) {
-    console.log("Controller Error:", error);
+  } catch (error) { 
     return next(new ErrorHandler("Upload to Cloudinary failed", 500));
   }
 });
@@ -312,8 +307,7 @@ export const deleteProductImage = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Product not found", 404));
   }
 
-  const { imgId } = req.body;
-  console.log("Attempting to delete image with Public ID:", imgId);
+  const { imgId } = req.body; 
 
   // 1. Delete from Cloudinary
   await delete_file(imgId);
@@ -330,8 +324,7 @@ export const deleteProductImage = catchAsyncErrors(async (req, res, next) => {
     },
     { new: true } // Returns the updated document
   );
-
-  console.log("Image removed from DB. Remaining images:", product.images.length);
+ 
 
   res.status(200).json({
     success: true,

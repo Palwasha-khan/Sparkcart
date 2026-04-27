@@ -1,13 +1,56 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useGetAdminUserQuery, useUpdateUserMutation } from '../../redux/api/userApi'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import MetaData from '../layout/Metadata'
+import AdminLayout from '../layout/adminLayout'
+import toast from 'react-hot-toast'
 
-const UpdateUser = () => {
+const UpdateUser = () => { 
+   const [email,setEmail] = useState("")
+    const [name,setName] = useState("")
+    const [role,setRole] = useState("")
+    
+    const navigate = useNavigate();
+    const params = useParams();
+
+    const {user} = useSelector((state) => state.auth)
+     const{data} = useGetAdminUserQuery(params?.id);
+
+    const [updateUser,{isLoading,error,isSuccess}] = useUpdateUserMutation();
+
+     useEffect(() => {
+        if (data) {
+            setName(data?.user.name)
+            setEmail(data?.user.email)
+            setRole(data?.user.role)
+        }
+
+        if (error) {
+          toast.error(error?.data?.message || 'Something went wrong')
+        }
+
+        if (isSuccess) {
+          toast.success( "user Updated");
+          navigate("/admin/users")
+        }
+      }, [data,error,isSuccess,navigate])
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+
+        const userData = {
+            name,email,role
+        }
+        updateUser({ id: user._id, body: userData })
+    }
   return (
      <>
     <MetaData title={'Update User'}/>
     <AdminLayout>
          <div className="row wrapper">
       <div className="col-10 col-lg-8">
-        <form className="shadow-lg">
+        <form className="shadow-lg" onSubmit={submitHandler}>
           <h2 className="mb-4">Update User</h2>
 
           <div className="mb-3">
@@ -17,7 +60,8 @@ const UpdateUser = () => {
               id="name_field"
               className="form-control"
               name="name"
-              value=""
+              value={name}
+              onChange={(e) => setName(e.target.value)} 
             />
           </div>
 
@@ -28,13 +72,14 @@ const UpdateUser = () => {
               id="email_field"
               className="form-control"
               name="email"
-              value=""
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}  
             />
           </div>
 
           <div className="mb-3">
             <label for="role_field" className="form-label">Role</label>
-            <select id="role_field" className="form-select" name="role" value="">
+            <select id="role_field" className="form-select" name="role" value={role} onChange={(e) => setRole(e.target.value)}>
               <option value="user">user</option>
               <option value="admin">admin</option>
             </select>

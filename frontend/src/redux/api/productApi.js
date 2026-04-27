@@ -78,6 +78,11 @@ export const productApi = createApi({
       invalidatesTags:["Product","AdminProducts"],
     }),
 
+    getProductReviews: builder.query({
+      query: (id) => `/reviews?id=${id}`,
+      providesTags: ['Reviews'],
+    }),
+
     deleteReview: builder.mutation({
       query(params) {
         return {
@@ -86,7 +91,7 @@ export const productApi = createApi({
           params: { productId: params.productId, id: params.id },
         };
       },
-      invalidatesTags: ["Reviews"],
+      invalidatesTags: ["Reviews","Product"],
     }),
 
     uploadProductImages: builder.mutation({
@@ -125,5 +130,6 @@ export const {
     useDeleteProductMutation,
     useUploadProductImagesMutation,
     useDeleteProductImageMutation,
-    useDeleteReviewMutation} 
+    useDeleteReviewMutation,
+    useGetProductReviewsQuery} 
     = productApi

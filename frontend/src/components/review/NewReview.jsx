@@ -24,6 +24,7 @@ const NewReview = ({productId}) => {
         submitReview(reviewData)
 
     }
+    if (!productId) return null; // If productId is slow to load, it might stay hidden
   return (
     <>
     <div>

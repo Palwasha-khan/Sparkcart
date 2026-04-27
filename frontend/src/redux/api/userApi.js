@@ -6,7 +6,7 @@ export const userApi = createApi({
     baseUrl: "/api/v1",
     credentials: "include", // 🔥 IMPORTANT for cookies
   }),
-  tagTypes:["User","AdminUsers"],
+  tagTypes:["User","AdminUsers", "AdminUser"],
   endpoints: (builder) => ({
       getMe: builder.query({
       query: () => "/me",
@@ -67,6 +67,10 @@ export const userApi = createApi({
          query: () => `/admin/users`,
          providesTags: ["AdminUsers"],
     }),
+    getAdminUser:builder.query({
+         query: (id) => `/admin/users/${id}`,
+         providesTags: ["AdminUser"],
+    }),
 
     deleteUser: builder.mutation({
         query(id) {
@@ -78,10 +82,11 @@ export const userApi = createApi({
       invalidatesTags: ["AdminUsers"],
     }),
       updateUser: builder.mutation({ 
-        query({id, orderStatus}) {
+        query({id, body}) {
         return{
             url:`/admin/users/${id}`,
             method:"PUT", 
+            body,
         }
       },
       invalidatesTags: ["AdminUsers"], 
@@ -90,4 +95,4 @@ export const userApi = createApi({
 });
 
 
-export const { useGetMeQuery, useUpdateProfileMutation , useUploadAvatarMutation, useUpdatePassswordMutation, useGetAdminUsersQuery, useDeleteUserMutation, useUpdateUserMutation} = userApi
+export const { useGetMeQuery, useUpdateProfileMutation , useUploadAvatarMutation, useUpdatePassswordMutation,useGetAdminUserQuery ,useGetAdminUsersQuery, useDeleteUserMutation, useUpdateUserMutation,} = userApi

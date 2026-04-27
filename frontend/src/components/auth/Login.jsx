@@ -17,8 +17,7 @@ const Login = () => {
     
      useEffect(() => {
 
-      if(isAuthenticated){
-        console.log(" hellooo")
+      if(isAuthenticated){ 
         navigate("/");
       }
         if (error) {

@@ -61,13 +61,12 @@ const ProductDetails = () => {
       stock : product?.stock,
       quantity 
     }
-    dispatch(setCartItem(cartItem))
-    console.log("CART ITEM:", cartItem);
+    dispatch(setCartItem(cartItem)) 
 
     toast.success("Item added to cart")
   }
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Loader />; 
 
   return (
     <>
