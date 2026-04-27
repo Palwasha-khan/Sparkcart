@@ -112,6 +112,9 @@ export const updateProfile = catchAsyncErrors(async(req,res,next) =>{
     })
 })
 
+
+//admin routes
+
 //get all users =>/api/v1/admin/users
 export const allUsers = catchAsyncErrors(async(req,res,next) =>{
    
