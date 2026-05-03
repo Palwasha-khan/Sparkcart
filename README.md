@@ -22,19 +22,26 @@ A comprehensive, full-stack e-commerce application featuring a dynamic storefron
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** React.js, Redux Toolkit, RTK Query, MDBootstrap
+- **Frontend:** React.js, Redux Toolkit (RTK), RTK Query, MDBootstrap
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB & Mongoose
 - **Authentication:** JWT (JSON Web Tokens) & HTTP-only Cookies
 - **Media Storage:** Cloudinary API
 - **Payments:** Stripe API
 
------
+---
 
+## ⚙️ Installation & Setup
 
-##  Environment Configuration
+### 1. Clone the Repository
+```bash
+git clone [YOUR_REPO_LINK]
+cd [YOUR_REPO_FOLDER_NAME]
+
+2. Environment Configuration
 To run this project, you will need to create a .env file in your root directory and add the following variables. This ensures the app can connect to the database and external services securely.
 
+Code snippet
 PORT=3000
 NODE_ENV=DEVELOPMENT
 
@@ -58,34 +65,23 @@ CLOUDINARY_API_SECRET=[YOUR_API_SECRET]
 # Frontend Link
 FRONTEND_URL=http://localhost:5173
 
------
-
-## ⚙️ Installation & Setup
-
-### 1. Clone the Repository
-```bash
-git clone [YOUR_REPO_LINK]
-cd [YOUR_REPO_FOLDER_NAME]
-
+3. Install Dependencies
 Bash
 # Install backend dependencies
 npm install
- 
-# Install Frontend dependencies
+
+# Install frontend dependencies
 cd frontend
 npm install
- 
-Bash
-# Run concurrently
-npm run dev
 
+4. Run the Application
+Bash
+# From the root folder, run both frontend and backend concurrently
+npm run dev
+```
+-----
 
 👨‍💻 Lessons Learned
 During this project, I mastered Full-Stack State Synchronization. A key challenge was ensuring the UI reflected database updates instantly without manual refreshes. I solved this by implementing RTK Query Tag Invalidation (specifically for Product and Reviews tags), which automates data re-fetching upon successful mutations. This project also strengthened my understanding of Mongoose middleware for calculating aggregate ratings and implementing Role-Based Access Control (RBAC) to secure administrative routes.
-
-👨‍💻 Author
-[Palwasha]
-
-Software Engineer specializing in MERN Stack development.
 
 [Your Portfolio/LinkedIn Link :https://www.linkedin.com/in/palwasha-khan2201/]
