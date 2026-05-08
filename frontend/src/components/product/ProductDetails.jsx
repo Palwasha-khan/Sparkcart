@@ -80,6 +80,7 @@ const ProductDetails = () => {
             alt=""
             width="340"
             height="390"
+            object-fit="cover"
           />
         </div >
         <div className="row justify-content-start mt-5">

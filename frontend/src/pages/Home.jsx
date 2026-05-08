@@ -49,7 +49,11 @@ const params = { page, keyword, min, max,category }
           <h1 id="products_heading" className="text-secondary">
            {keyword ? `${data?.products?.length} product found with Keyword : ${keyword} `: "Latest Products" }
            
-          </h1>
+          </h1> 
+        <p className="text-center mx-auto mb-5" style={{ maxWidth: '600px', color: '#666', fontStyle: 'italic' }}>
+          Crafted with a pinch of sparkle and a whole lot of love, our latest collection is a 
+          celebration of all things aesthetic. Discover unique, handcrafted pieces designed to make you glow.
+        </p>
  
           <section id="products" className="mt-5">
             <div className="row"> 

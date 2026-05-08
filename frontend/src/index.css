@@ -1,4 +1,4 @@
- html,
+html,
 body {
   font-family: "Amazon Ember";
   width: 100%;
@@ -20,103 +20,138 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(66, 66, 66, 0.2);
+  background-color: #d8b4fe; /* Changed to Soft Purple */
   border: 0px;
   background-clip: padding-box;
   border-radius: 5px;
 }
 
+/* --- High-End Boutique Navbar --- */
+
 nav {
-  background-color: #232f3e;
+  background-color: #e3d2c0; /* Subtle off-white/cream background from the image */
   padding: 1rem 1rem;
+  border-bottom: 1px solid #d3b8ae; /* Thin dusty rose border */
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
 }
 
-.navbar {
-  padding: 0.1rem 1rem;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
+/* Search Field - Soft and Subtle */
+#search_field {
+  border: 1px solid #e3e3e3;
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+  background-color: #fffcfd; /* Hint of blush in the input */
+  height: 2.4rem;
 }
 
 #search_btn {
-  background-color: #febd69;
+  background-color: #ffffff;
+  color: #b28a8d; /* Rose Gold icon color */
+  border: 1px solid #e3e3e3;
+  border-left: none;
+  transition: 0.3s;
 }
 
-.input-group {
-  width: 90%;
-  margin-right: 35%;
+#search_btn:hover {
+  color: #a31153; /* Changes to Berry/Plum on hover to match "View Details" button */
+  background-color: #fffcfd;
 }
 
-#search_field {
-  height: 2.4rem;
-  padding: 1rem;
-}
-
-#login_btn,
-#view_btn,
-#new_review_btn {
-  background-color: #fa9c23;
-  padding: 0.4rem 1.8rem;
-  color: white;
-}
-
+/* Cart Icon & Count */
 #cart {
-  font-size: 1rem;
-  color: white;
+  font-size: 1.1rem;
+  color: #3d1a24; /* Deep Plum color for text */
+  font-weight: 500;
 }
 
 #cart_count {
-  background-color: #febd69;
+  background-color: #a31153; /* Deep Berry/Plum to match your buttons */
+  color: white;
   padding: 0.2rem 0.5rem;
-  border-radius: 0.2rem;
-  color: black;
-  font-weight: bold;
-  font-size: 0.9rem;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  margin-left: 5px;
 }
 
-/* Home page */
+/* User Profile in Nav */
+.avatar-nav {
+  border: 2px solid #b28a8d; /* Rose gold ring around profile pic */
+}
+
+.dropdown-item:hover {
+  background-color: #fff5f8;
+  color: #a31153;
+}
+
+ 
+
+/* Home page */ 
 #products_heading {
-  margin-top: 1.8rem;
+  font-family: 'Playfair Display', serif; /* Use a Serif font for the "Latest Products" title */
+  font-weight: 700;
+  color: #3d1a24;
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 2.5rem;
 }
 
+/* The Card Container */
 .card {
-  height: 100%;
+  border: 2px solid #b28a8d !important; /* Rose Gold/Dusty Rose border from image */
+  border-radius: 12px !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+  overflow: hidden;
 }
 
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(178, 138, 141, 0.2);
+}
+
+/* Product Image in Card */
+.card-img-top {
+  padding: 10px;
+  border-radius: 15px;
+  object-fit: cover;
+  height: 250px; /* Consistent height like the picture */
+}
+
+/* Card Text Styling */
 .card-title a {
-  color: #2e2e2e;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: #3d1a24 !important;
+  font-size: 1.2rem;
   text-decoration: none;
-}
-
-.card-title a:hover {
-  color: #fa9c23;
-  text-decoration: none;
-}
-
-.card-body {
-  padding-left: 0;
 }
 
 .card-text {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #3d1a24;
 }
 
-.card-img-top {
-  width: 200px;
-  height: 150px;
+/* The "View Details" Button - Matching the Deep Plum in the pic */
+#view_btn {
+  background-color: #a31153 !important; /* The Deep Plum/Berry color */
+  color: white !important;
+  border-radius: 5px !important; /* Rectangular but slightly soft */
+  padding: 0.6rem;
+  font-weight: 500;
+  text-transform: none;
+  border: none;
 }
 
-.ratings {
-  font-size: 1.2rem;
-  color: #fdcc0d;
+#view_btn:hover {
+  background-color: #820d42 !important;
+  box-shadow: 0 4px 8px rgba(163, 17, 83, 0.3);
 }
 
+/* Rating Stars */
 #no_of_reviews {
-  font-size: 0.9rem;
-  color: grey;
+  color: #888;
+  font-size: 0.85rem;
 }
 
 .App {
@@ -147,7 +182,7 @@ footer {
 #cart_btn,
 #review_btn {
   border-radius: 2rem;
-  background-color: #fa9c23;
+  background-color: #db2777; /* Changed to Pink */
   border: none;
   padding: 0.5rem 2rem;
 }
@@ -164,11 +199,11 @@ footer {
 }
 
 .redColor {
-  color: red!important;;
+  color: red;
 }
 
 .greenColor {
-  color: green !important;
+  color: green;
 }
 
 #product_image {
@@ -192,8 +227,8 @@ footer {
   height: 64px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid #fa9c23;
-  border-color: #fa9c23 transparent;
+  border: 6px solid #db2777; /* Changed to Pink */
+  border-color: #db2777 transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
 @keyframes lds-dual-ring {
@@ -225,22 +260,22 @@ footer {
 }
 
 #card_item_price {
-  color: #febd69;
+  color: #db2777; /* Changed to Pink */
   font-weight: bold;
   font-size: 1.4rem;
 }
 
 #checkout_btn,
 .review-btn {
-  background-color: #fa9c23;
-  border-color: #fa9c23;
+  background-color: #db2777; /* Changed to Pink */
+  border-color: #db2777;
   margin-top: 2rem;
   border-radius: 5rem;
 }
 
 #view_order_details {
-  background-color: #fa9c23;
-  border-color: #fa9c23;
+  background-color: #db2777; /* Changed to Pink */
+  border-color: #db2777;
 }
 
 #order_summary {
@@ -283,7 +318,6 @@ footer {
   justify-content: center;
   align-items: center;
   margin-top: 5rem;
-
   font-weight: 700;
 }
 
@@ -293,14 +327,14 @@ footer {
 
 .wrapper form .btn,
 .fetch-btn {
-  background-color: #fa9c23;
-  border-color: #fa9c23;
+  background-color: #db2777; /* Changed to Pink */
+  border-color: #db2777;
   color: white;
   margin-top: 1rem;
 }
 
 .fetch-btn:hover {
-  background-color: #fa9c23;
+  background-color: #9d174d; /* Darker Pink hover */
   color: white;
 }
 
@@ -378,7 +412,7 @@ footer {
 }
 
 .active-step {
-  background: #fa9c23;
+  background: #db2777; /* Changed to Pink */
   color: #fff;
 }
 
@@ -386,7 +420,7 @@ footer {
   float: left;
   width: 0;
   border-top: 20px solid transparent;
-  border-left: 15px solid #fa9c23;
+  border-left: 15px solid #db2777; /* Changed to Pink */
   border-bottom: 20px solid transparent;
   margin-left: -1px;
 }
@@ -394,9 +428,9 @@ footer {
 .triangle2-active {
   width: 0;
   float: left;
-  border-top: 20px solid #fa9c23;
+  border-top: 20px solid #db2777; /* Changed to Pink */
   border-left: 15px solid #fff;
-  border-bottom: 20px solid #fa9c23;
+  border-bottom: 20px solid #db2777; /* Changed to Pink */
   margin-right: -1px;
 }
 
@@ -436,8 +470,8 @@ footer {
 }
 
 #edit_profile {
-  background-color: #fa9c23;
-  border-color: #fa9c23;
+  background-color: #db2777; /* Changed to Pink */
+  border-color: #db2777;
 }
 
 /* Confirm Order */
@@ -449,8 +483,8 @@ footer {
 
 .update-btn,
 #create_btn {
-  background-color: #fa9c23;
-  border-color: #fa9c23;
+  background-color: #db2777; /* Changed to Pink */
+  border-color: #db2777;
   color: white;
 }
 
@@ -460,16 +494,16 @@ footer {
 
 /* Pagination */
 .page-item.active .page-link {
-  background-color: #fa9c23;
-  border-color: #fa9c23;
+  background-color: #db2777; /* Changed to Pink */
+  border-color: #db2777;
 }
 
 .page-link {
-  color: #fa9c23;
+  color: #db2777; /* Changed to Pink */
 }
 
 .page-link:hover {
-  color: #fa9c23;
+  color: #9d174d;
 }
 
 /* Products List Admin */
@@ -516,7 +550,7 @@ footer {
 }
 
 .orange {
-  color: #fa9c23;
+  color: #db2777; /* Changed to Pink */
 }
 
 .yellow {
@@ -538,8 +572,8 @@ footer {
 }
 
 #filter_form button {
-  background-color: #fa9c23;
-  border-color: #fa9c23;
+  background-color: #db2777; /* Changed to Pink */
+  border-color: #db2777;
 }
 
 .filter {
@@ -558,8 +592,8 @@ footer {
 }
 
 .list-group-item.active {
-  background-color: #f3f4f6;
-  border-color: #f3f4f6;
+  background-color: #f3e8ff; /* Light Lavender background */
+  border-color: #f3e8ff;
   border-radius: 0.3rem;
-  color: #fa9c23;
+  color: #7e22ce; /* Purple text */
 }

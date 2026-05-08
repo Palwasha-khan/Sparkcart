@@ -14,8 +14,7 @@ function Header() {
 
  const { user, isAuthenticated, loading } = useSelector((state) => state.auth);
 
-// Debugging: Add this to see what is happening in the Header specifically
-console.log("Header State -> Auth:", isAuthenticated, "User:", user?.name); const {cartItems} = useSelector((state) => state.cart || {});
+  const {cartItems} = useSelector((state) => state.cart || {});
 
  
    const navigate = useNavigate();
@@ -33,8 +32,9 @@ const logoutHandler = async () => {
         <div className="navbar-brand">
           <a href="/">
             <img
-              src="/images/shopit_logo.png"
-              alt="ShopIT Logo"
+              src="/images/parlisa_logo.png"
+              alt="Parlisa Sparkles Logo"
+              style={{ width: "150px", height: "auto" }}
             />
           </a>
         </div>
