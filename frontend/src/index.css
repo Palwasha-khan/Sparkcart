@@ -96,26 +96,57 @@ nav {
 }
 
 /* The Card Container */
+ 
 .card {
   border: 2px solid #b28a8d !important; /* Rose Gold/Dusty Rose border from image */
   border-radius: 12px !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background-color: #fff;
   overflow: hidden;
+  flex-direction: column;
+  height: 100%;
 }
+/* Force images to be the exact same size without stretching */
+.card-img-top {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Makes the image area a perfect square */
+  object-fit: cover;   /* Crops the image to fit the square perfectly */
+  padding: 10px;
+  border-radius: 20px;
+}
+/* Product Image in Card
+.card-img-top {
+  padding: 10px;
+  border-radius: 15px;
+  object-fit: cover;
+  height: 250px; /* Consistent height like the picture */
+ */
+/* Make the card body push the button to the bottom */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* This fills the empty space */
+  padding: 1rem;
+}
+
+/* Push the price and button to the very bottom regardless of title length */
+.mt-auto-custom {
+  margin-top: auto;
+}
+
+.card-title {
+  min-height: 3rem; /* Ensures titles that take 1 line don't move the button up */
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
 
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(178, 138, 141, 0.2);
 }
 
-/* Product Image in Card */
-.card-img-top {
-  padding: 10px;
-  border-radius: 15px;
-  object-fit: cover;
-  height: 250px; /* Consistent height like the picture */
-}
+
 
 /* Card Text Styling */
 .card-title a {

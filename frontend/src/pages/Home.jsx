@@ -3,6 +3,7 @@ import { useGetProductsQuery } from '../redux/api/productApi'
 import ProductItem from "../components/product/ProductItem"
 import Loader from "../components/layout/Loader"
 
+
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import CustomPagination from '../components/layout/CustomPagination'
@@ -37,39 +38,43 @@ const params = { page, keyword, min, max,category }
 
   return (
     <>
-     <MetaData title="Buy Best Products Online" />
-    <div className="container">
-      <div className="row">
-        {keyword && (
-      <div className="col-12 col-md-3 mt-5">
-        <Filter />
-      </div>
-    )}
-        <div className={keyword? "col-6  col-md-9":"col-6 col-sm-6 col-md-12"}>
-          <h1 id="products_heading" className="text-secondary">
-           {keyword ? `${data?.products?.length} product found with Keyword : ${keyword} `: "Latest Products" }
-           
-          </h1> 
-        <p className="text-center mx-auto mb-5" style={{ maxWidth: '600px', color: '#666', fontStyle: 'italic' }}>
-          Crafted with a pinch of sparkle and a whole lot of love, our latest collection is a 
-          celebration of all things aesthetic. Discover unique, handcrafted pieces designed to make you glow.
-        </p>
- 
-          <section id="products" className="mt-5">
-            <div className="row"> 
-              {data?.products?.map((product) => (
-                <ProductItem key={product._id} product={product}/>
-              ))}
-            </div>
-          </section>
-        
-       <CustomPagination
-        resPerPage={data?.resPerPage}
-        filteredProductsCount={data?.filterProductscount}
-      />
+   <MetaData title="Buy Best Products Online" />
+      <div className="container">
+        <div className="row">
+          
+          {/* 1. Filter Sidebar: Removed the {keyword &&} check so it's always visible */}
+          <div className="col-12 col-md-3 mt-5">
+            <Filter />
+          </div>
+
+          {/* 2. Main Products Column: Changed width to always be col-md-9 */}
+          <div className="col-12 col-md-9">
+            <h1 id="products_heading" className="text-secondary">
+              {keyword
+                ? `${data?.products?.length} product found with Keyword: ${keyword}`
+                : "Latest Products"}
+            </h1>
+            
+            <p className="text-center mx-auto mb-5" style={{ maxWidth: '600px', color: '#666', fontStyle: 'italic' }}>
+              Crafted with a pinch of sparkle and a whole lot of love, our latest collection is a 
+              celebration of all things aesthetic. Discover unique, handcrafted pieces designed to make you glow.
+            </p>
+
+            <section id="products" className="mt-5">
+              <div className="row">
+                {data?.products?.map((product) => (
+                  <ProductItem key={product._id} product={product} />
+                ))}
+              </div>
+            </section>
+
+            <CustomPagination
+              resPerPage={data?.resPerPage}
+              filteredProductsCount={data?.filterProductscount}
+            />
+          </div>
         </div>
       </div>
-    </div>
     </>
   )
 }

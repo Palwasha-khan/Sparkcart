@@ -1,17 +1,10 @@
 import React, { useActionState, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getPriceQueryParams } from '../../helpers/helpers';
-
+import { PRODUCT_CATEGORIES } from "../../constants/constants";
 const Filter = () => {
 
-    const categories = ["bracelets",
-                "rings",
-                "anklets",
-                "necklace",
-                "hair Accessories",
-                "earrings",
-                "studs",
-            ]
+    
 
     const [min,SetMin] = useState(0);
     const [max,SetMax] = useState(0);
@@ -78,7 +71,7 @@ const handleCategoryClick = (category) => {
       <h5 className="mb-3">Category</h5>
 
         <ul className="list-group">
-        {categories.map((category) => (
+        {PRODUCT_CATEGORIES?.map((category) => (
             <li
             key={category}
             className="list-group-item"

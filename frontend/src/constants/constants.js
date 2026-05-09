@@ -3,7 +3,8 @@
                 "rings",
                 "anklets",
                 "necklace",
-                "hair Accessories",
-                "earrings",
-                "studs",
+                "bangles",
+                "earrings", 
+                "keychains",
+                "phone charms",
 ];

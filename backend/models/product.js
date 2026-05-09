@@ -39,9 +39,10 @@ const productSchema = new mongoose.Schema({
                 "rings",
                 "anklets",
                 "necklace",
-                "hair Accessories",
-                "earrings",
-                "studs",
+                "bangles",
+                "earrings", 
+                "keychains",
+                "phone charms",
             ],
             message:"please select correct category"
         },
