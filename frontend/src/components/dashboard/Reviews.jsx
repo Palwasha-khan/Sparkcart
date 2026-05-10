@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AdminLayout from '../layout/AdminLayout';
-import MetaData from '../layout/MetaData';
+import MetaData from '../layout/Metadata';
 import Loader from '../layout/Loader';
 import { MDBDataTable } from 'mdbreact';
 import { Link } from 'react-router-dom';
