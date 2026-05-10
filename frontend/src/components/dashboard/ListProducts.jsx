@@ -6,7 +6,7 @@ import MetaData from '../layout/Metadata'
 import { useDispatch } from 'react-redux' 
 import { useDeleteProductMutation, useGetAdminProductsQuery, useUpdateProductMutation } from '../../redux/api/productApi'
 import { Link, useNavigate } from 'react-router-dom'
-import AdminLayout from '../layout/adminLayout'
+import AdminLayout from '../layout/AdminLayout'
 const ListProducts = () => {
   
  const navigate = useNavigate();

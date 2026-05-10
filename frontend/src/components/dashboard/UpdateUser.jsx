@@ -3,7 +3,7 @@ import { useGetAdminUserQuery, useUpdateUserMutation } from '../../redux/api/use
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import MetaData from '../layout/Metadata'
-import AdminLayout from '../layout/adminLayout'
+import AdminLayout from '../layout/AdminLayout'
 import toast from 'react-hot-toast'
 
 const UpdateUser = () => { 

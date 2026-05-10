@@ -5,7 +5,7 @@ import {
 } from '../../redux/api/productApi';
 import { useNavigate, useParams } from 'react-router-dom'; 
 import MetaData from '../layout/Metadata';
-import AdminLayout from '../layout/adminLayout';
+import AdminLayout from '../layout/AdminLayout';
 import toast from 'react-hot-toast';
 import { PRODUCT_CATEGORIES } from "../../constants/constants";
 

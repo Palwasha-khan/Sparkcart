@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import AdminLayout from '../layout/adminLayout'
+import AdminLayout from '../layout/AdminLayout'
 import MetaData from '../layout/Metadata';
 import { Link, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';

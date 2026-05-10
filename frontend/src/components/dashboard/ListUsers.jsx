@@ -4,7 +4,7 @@ import Loader from '../layout/Loader';
 import { MDBDataTable } from 'mdbreact';
 import MetaData from '../layout/Metadata';
 import { Link } from 'react-router-dom';
-import AdminLayout from '../layout/adminLayout';
+import AdminLayout from '../layout/AdminLayout';
 import { useDeleteUserMutation, useGetAdminUsersQuery } from '../../redux/api/userApi';
 const ListUsers = () => {
     // Fetch Data

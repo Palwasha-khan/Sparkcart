@@ -4,7 +4,7 @@ import Loader from '../layout/Loader';
 import { MDBDataTable } from 'mdbreact';
 import MetaData from '../layout/Metadata';
 import { Link } from 'react-router-dom';
-import AdminLayout from '../layout/adminLayout';
+import AdminLayout from '../layout/AdminLayout';
 import { useDeleteOrderMutation, useGetAdminOrdersQuery,  } from '../../redux/api/orderApi'; 
 
 const ListOrders = () => {

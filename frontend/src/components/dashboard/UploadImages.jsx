@@ -7,7 +7,7 @@ import {
   useDeleteProductImageMutation // HIGHLIGHT: Added this for the trash icon logic
 } from "../../redux/api/productApi";
 import MetaData from "../layout/Metadata";
-import AdminLayout from "../layout/adminLayout";
+import AdminLayout from "../layout/AdminLayout";
 import toast from "react-hot-toast";
 
 const UploadImages = () => {
