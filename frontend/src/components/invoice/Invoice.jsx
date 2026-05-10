@@ -1,5 +1,5 @@
 import React from 'react'
-import "./invoice.css"
+import "./Invoice.css"
 import MetaData from '../layout/Metadata'
 import   { useEffect } from 'react'
 import html2canvas from 'html2canvas'
