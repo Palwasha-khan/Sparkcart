@@ -1,4 +1,4 @@
- import AdminLayout from '../layout/AdminLayout'
+import AdminLayout from '../layout/AdminLayout';
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import Sales from '../charts/Sales';
