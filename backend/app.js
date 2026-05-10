@@ -41,10 +41,13 @@ app.use("/api/v1",paymentRoutes)
 //using error middleware
 app.use(errorMiddleware);
 
-const server = app.listen(process.env.PORT,()=>{
-    server.timeout = 600000;
-    console.log(`server started on port : ${process.env.PORT} in ${process.env.NODE_ENV} mode`)
-})
+// Only start the server if we are NOT on Vercel
+if (process.env.NODE_ENV !== 'PRODUCTION') {
+  const server = app.listen(process.env.PORT || 3000, () => {
+    console.log(`Server started on port: ${process.env.PORT || 3000}  in ${process.env.NODE_ENV} mode`);
+  });
+  server.timeout = 600000;
+}
 
 //handle unhandled promise rejections
 process.on("unhandledRejection",(err)=>{
@@ -54,3 +57,5 @@ process.on("unhandledRejection",(err)=>{
         process.exit(1)
     })
 })
+ 
+export default app;
