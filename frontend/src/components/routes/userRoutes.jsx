@@ -15,7 +15,7 @@ import PaymentMethod from '../cart/PaymentMethod';
 import MyOrders from '../order/MyOrders';
 import OrderDetails from '../order/OrderDetails';
 import Invoice from '../invoice/Invoice';
-import Home from '../../pages/home';
+import Home from '../../pages/Home';
 
 const userRoutes = () => {
   return (
