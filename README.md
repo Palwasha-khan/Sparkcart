@@ -1,8 +1,12 @@
-# 🛒 ShopIT - MERN Stack E-Commerce & Admin Dashboard
+# 🛒 Sparkcart - MERN Stack E-Commerce & Admin Dashboard
 
 A comprehensive, full-stack e-commerce application featuring a dynamic storefront, integrated payment logic, and a robust Admin suite for business management.
 
 ---
+
+## 🌐 Live Demo
+
+👉 [View Live Project](https://sparkcart-1bvg.vercel.app/) 
 
 ## 🚀 Key Features
 
@@ -84,4 +88,4 @@ npm run dev
 👨‍💻 Lessons Learned
 During this project, I mastered Full-Stack State Synchronization. A key challenge was ensuring the UI reflected database updates instantly without manual refreshes. I solved this by implementing RTK Query Tag Invalidation (specifically for Product and Reviews tags), which automates data re-fetching upon successful mutations. This project also strengthened my understanding of Mongoose middleware for calculating aggregate ratings and implementing Role-Based Access Control (RBAC) to secure administrative routes.
 
-[Your Portfolio/LinkedIn Link :https://www.linkedin.com/in/palwasha-khan2201/]
+[LinkedIn Link :https://www.linkedin.com/in/palwasha-khan2201/]
