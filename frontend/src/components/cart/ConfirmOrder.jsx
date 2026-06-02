@@ -35,7 +35,7 @@ const ConfirmOrder = () => {
           <div className="row">
             <div className="col-4 col-lg-2">
               <img
-                src={item?.image}
+                src={item?.images}
                 alt={item?.name} 
                 height="45"
                 width="65"
@@ -47,7 +47,7 @@ const ConfirmOrder = () => {
             </div>
 
             <div className="col-4 col-lg-4 mt-4 mt-lg-0">
-              <p>{item?.quantity} x ${item?.price} ={""} <b>${(item?.quantity * item.price).toFixed(2)}</b></p>
+              <p>{item?.quantity} x {item?.price} ={""} <b>PKR {(item?.quantity * item.price).toFixed(2)}</b></p>
             </div>
           </div>
         </div>
@@ -62,19 +62,39 @@ const ConfirmOrder = () => {
         <div id="order_summary">
           <h4>Order Summary</h4>
           <hr />
-          <p>Subtotal: <span className="order-summary-values">${itemsPrice}</span></p>
-          <p>Shipping: <span className="order-summary-values">${shippingPrice}</span></p>
-          <p>Tax: <span className="order-summary-values">${taxPrice}</span></p>
+          
+          {/* 🌟 1. Subtotal Row */}
+            <div className="d-flex justify-content-between my-2">
+              <span className="text-muted">Subtotal:</span>
+              <span className="text-secondary font-medium">PKR {itemsPrice}</span>
+            </div>
 
-          <hr />
+            {/* 🌟 2. Shipping Row */}
+            <div className="d-flex justify-content-between my-2">
+              <span className="text-muted">Shipping:</span>
+              <span className="text-secondary font-medium">PKR {shippingPrice}</span>
+            </div>
 
-          <p>Total: <span className="order-summary-values">${totalPrice}</span></p>
+            {/* 🌟 3. Tax Row */}
+            <div className="d-flex justify-content-between my-2">
+              <span className="text-muted">Tax(5%):</span>
+              <span className="text-secondary font-medium">PKR {taxPrice}</span>
+            </div>
+
+            <hr />
+
+            {/* 🌟 4. Final Total Row (Isay bold rakhna hai) */}
+            <div className="d-flex justify-content-between my-2">
+              <span className="font-weight-bold">Total:</span>
+              <span className="font-weight-bold" style={{ color: "#d63384" }}>PKR {totalPrice}</span> 
+            </div>
 
           <hr />
           <Link to="/payment_method" id="checkout_btn" className="btn btn-primary w-100">
             Proceed to Payment
           </Link>
         </div>
+        
       </div>
     </div>
 

@@ -54,12 +54,14 @@ const logoutHandler = async () => {
         {user? (
           <div className="ms-4 dropdown d-inline">
           <button
-            className="btn dropdown-toggle text-white"
+            className="btn dropdown-toggle "
+            style={{ color: "#2d0a31", fontWeight: "600" }}
             type="button"
             id="dropDownMenuButton"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
+             
             <figure className="avatar avatar-nav">
               <img
                 src={user?.avatar ? user?.avatar?.url : "/images/default_avatar.jpg"}

@@ -60,7 +60,7 @@ const Invoice = () => {
             <div>
               455 Foggy Heights,
               <br />
-              AZ 85004, US
+              AZ 85004, Pakistan
             </div>
             <div>(602) 519-0450</div>
             <div>
@@ -75,7 +75,7 @@ const Invoice = () => {
               <span>ADDRESS</span> {shippingInfo?.address}, {shippingInfo?.city},{" "} {shippingInfo?.zipCode}, {shippingInfo?.country}
             </div>
             <div><span>DATE</span>{new Date(order?.createdAt).toLocaleString("en-US")}</div>
-            <div><span>Status</span> {shippingInfo?.phoneNo}</div>
+            <div><span>Status</span> {order?.orderStatus}</div>
           </div>
         </header>
         <main>
@@ -95,9 +95,9 @@ const Invoice = () => {
               <tr>
                 <td className="service">{item?.product}</td>
                 <td className="desc">{item?.name}</td>
-                <td className="unit">${item?.price}</td>
+                <td className="unit">PKR {item?.price}</td>
                 <td className="qty">{item?.quantity}</td>
-                <td className="total">${item?.price * item?.quantity}</td>
+                <td className="total">PKR {item?.price * item?.quantity}</td>
               </tr>
                ))} 
 
@@ -105,28 +105,28 @@ const Invoice = () => {
                 <td colspan="4">
                   <b>SUBTOTAL</b>
                 </td>
-                <td className="total">${order?.itemsPrice}</td>
+                <td className="total">PKR {order?.itemsPrice}</td>
               </tr>
 
               <tr>
                 <td colspan="4">
                   <b>TAX 15%</b>
                 </td>
-                <td className="total">${order?.taxAmount}</td>
+                <td className="total">PKR {order?.taxAmount}</td>
               </tr>
 
               <tr>
                 <td colspan="4">
                   <b>SHIPPING</b>
                 </td>
-                <td className="total">${order?.shippingAmount}</td>
+                <td className="total">PKR {order?.shippingAmount}</td>
               </tr>
 
               <tr>
                 <td colspan="4" className="grand total">
                   <b>GRAND TOTAL</b>
                 </td>
-                <td className="grand total">${order?.totalAmount}</td>
+                <td className="grand total">PKR {order?.totalAmount}</td>
               </tr>
             </tbody>
           </table>

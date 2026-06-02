@@ -123,7 +123,9 @@ const ProductDetails = () => {
         </div>
         <hr />
 
-        <p id="product_price">${product?.price}</p>
+        <p style={{ fontSize: "1.5rem", fontWeight: "bold", margin: "10px 0" }}>
+  PKR {product?.price}
+</p>
         <div className="stockCounter d-inline">
           <span className="btn btn-danger minus" onClick={decreseQty}>-</span>
           <input

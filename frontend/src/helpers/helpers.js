@@ -25,8 +25,8 @@ export const calculateOrderCost = (cartItems) => {
     0
   );
 
-  const shippingPrice = itemsPrice > 200 ? 0 : 25;
-  const taxPrice = Number((0.15 * itemsPrice).toFixed(2));
+  const shippingPrice = itemsPrice > 1500 ? 0 : 250;
+  const taxPrice = Number((0.05 * itemsPrice).toFixed(2));
   const totalPrice = (itemsPrice + shippingPrice +taxPrice).toFixed(2)
 
   return{

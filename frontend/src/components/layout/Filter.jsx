@@ -11,6 +11,7 @@ const Filter = () => {
 
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams()
+    const currentCategory = searchParams.get('category');
 
 
   const handleButtonClick = (e) => {
@@ -71,17 +72,40 @@ const handleCategoryClick = (category) => {
       <h5 className="mb-3">Category</h5>
 
         <ul className="list-group">
-        {PRODUCT_CATEGORIES?.map((category) => (
-            <li
-            key={category}
-            className="list-group-item"
-            style={{ cursor: 'pointer' }}
-            onClick={() => handleCategoryClick(category)}
-            >
-            {category}
-            </li>
-        ))}
-        </ul>
+          {PRODUCT_CATEGORIES?.map((category) => {
+            // HIGHLIGHT: Logic to check if this item matches the URL
+            const isChecked = category === currentCategory;
+
+            return (
+              <li
+                key={category}
+                className="list-group-item"
+                style={{ cursor: 'pointer' }}
+                onClick={() => handleCategoryClick(category)}
+              >
+                {/* HIGHLIGHT: Checkbox input added here */}
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    checked={isChecked}
+                    readOnly
+                  />
+                  <label 
+                    className="form-check-label"
+                    
+                    style={{ 
+                            fontWeight: isChecked ? 'bold' : 'normal',
+                            color: isChecked ? '#ff69b4' : 'inherit' 
+                          }}
+                  >
+                    {category}
+                  </label>
+                </div>
+              </li>
+            );
+          })}
+        </ul> 
 
       <hr />
      

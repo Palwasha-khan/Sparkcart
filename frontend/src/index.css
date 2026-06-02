@@ -35,26 +35,41 @@ nav {
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
 }
 
+
 /* Search Field - Soft and Subtle */
 #search_field {
-  border: 1px solid #e3e3e3;
+  border: 2px solid #d1b3c4; /* Stronger, dusty rose border */
   border-right: none;
-  border-radius: 5px 0 0 5px;
-  background-color: #fffcfd; /* Hint of blush in the input */
-  height: 2.4rem;
+  border-radius: 8px 0 0 8px; /* Slightly rounder for a modern look */
+  background-color: #fffcfd;
+  height: 2.6rem; /* Slightly taller for better visual impact */
+  padding-left: 15px;
+  outline: none; /* Removes default browser blue outline */
+  transition: border-color 0.3s ease; /* Smooth transition when clicking */
 }
 
+/* Highlight the border when the user clicks to type */
+#search_field:focus {
+  border-color: #9c27b0; /* Turns purple when active */
+  box-shadow: 0 0 5px rgba(156, 39, 176, 0.2);
+}
 #search_btn {
   background-color: #ffffff;
-  color: #b28a8d; /* Rose Gold icon color */
-  border: 1px solid #e3e3e3;
+  color: #b28a8d; /* Your Rose Gold icon color */
+  /* MATCH: Increase to 2px to match the search field enhancement */
+  border: 2px solid #d1b3c4; 
   border-left: none;
-  transition: 0.3s;
+  border-radius: 0 8px 8px 0; /* Match the roundness of the input */
+  transition: all 0.3s ease;
+  padding: 0 15px;
 }
 
 #search_btn:hover {
-  color: #a31153; /* Changes to Berry/Plum on hover to match "View Details" button */
-  background-color: #fffcfd;
+  /* MATCH: Using the Berry/Plum color you mentioned */
+  color: #ffffff; 
+  background-color: #a31153; 
+  border-color: #a31153;
+  cursor: pointer;
 }
 
 /* Cart Icon & Count */
@@ -113,14 +128,7 @@ nav {
   object-fit: cover;   /* Crops the image to fit the square perfectly */
   padding: 10px;
   border-radius: 20px;
-}
-/* Product Image in Card
-.card-img-top {
-  padding: 10px;
-  border-radius: 15px;
-  object-fit: cover;
-  height: 250px; /* Consistent height like the picture */
- */
+} 
 /* Make the card body push the button to the bottom */
 .card-body {
   display: flex;
@@ -144,6 +152,22 @@ nav {
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 20px rgba(178, 138, 141, 0.2);
+}
+
+/* Change the color when the checkbox is checked */
+.form-check-input:checked {
+    background-color: #ff69b4; /* Hot Pink */
+    border-color: #da70d6;     /* Orchid Purple */
+}
+
+/* Add a soft pink glow when clicking */
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 105, 180, 0.25);
+    border-color: #ff69b4;
+}
+.filter-section .form-check-input:checked {
+    background-color: #ff69b4;
+    border-color: #da70d6;
 }
 
 

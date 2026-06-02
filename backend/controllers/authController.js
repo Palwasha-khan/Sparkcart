@@ -17,7 +17,6 @@ export const registerUser = catchAsyncErrors(async(req,res,next)=>{
     sendToken(user,200,res);
 })
 
-
 //login user  => api/v1/login
 export const loginUser = catchAsyncErrors(async(req,res,next)=>{
     const {email,password} = req.body;
@@ -29,16 +28,12 @@ export const loginUser = catchAsyncErrors(async(req,res,next)=>{
     //find user in the database
     const user = await User.findOne({ email}).select("+password")
 
-   if (!user) {
-    console.log("DEBUG: No user found with email:", email);
+   if (!user) { 
     return next(new ErrorHandler('Invalid email & password', 401));
 }
+ 
 
-console.log("DEBUG: Entered Password:", password);
-console.log("DEBUG: Hashed Password in DB:", user.password);
-
-const isPasswordMatched = await user.comparePassword(password);
-console.log("DEBUG: Match Result:", isPasswordMatched);
+const isPasswordMatched = await user.comparePassword(password); 
 
     //check if password is correct 
     if(!isPasswordMatched){
@@ -109,9 +104,7 @@ export const updateProfile = catchAsyncErrors(async(req,res,next) =>{
         email:req.body.email,
     };
 
-    const user = await User.findByIdAndUpdate(req.user._id, newUserData,{new:true});
-
-    
+    const user = await User.findByIdAndUpdate(req.user._id, newUserData,{new:true});  
 
     res.status(200).json({
         user,
@@ -145,7 +138,6 @@ export const getUserDetail = catchAsyncErrors(async(req,res,next) =>{
     })
 })
 
-
 // Update user profile - Admin => /api/v1/admin/users/:id
 export const updateUser = catchAsyncErrors(async (req, res, next) => {
     const { name, email, role } = req.body;
@@ -171,7 +163,6 @@ export const updateUser = catchAsyncErrors(async (req, res, next) => {
         user,
     });
 });
-
 
 //delete user profile - Admin =>/api/v1/admin/users/:id
 export const deleteUser = catchAsyncErrors(async(req,res,next) =>{

@@ -86,7 +86,7 @@ const Cart = () => {
 
             </div>
             <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-              <p id="card_item_price">${item?.price}</p>
+              <p id="card_item_price">PKR {item?.price}</p>
             </div>
             <div className="col-4 col-lg-3 mt-4 mt-lg-0">
               <div className="stockCounter d-inline">
@@ -125,7 +125,7 @@ const Cart = () => {
              {totalItems} (Units)</span></p>
           <p>Est. total: <span className="order-summary-values">
             {" "}
-            ${totalPrice.toFixed(2)}</span></p>
+            PKR {totalPrice.toFixed(2)}</span></p>
           <hr />
           <button id="checkout_btn" className="btn btn-primary w-100" onClick={checkoutHandler}>
             Check out

@@ -32,7 +32,7 @@ const ProductItem = ({product}) => {
         </span>
       </div>
 
-      <p className="card-text mt-2">${product?.price}</p>
+      <p className="text-black text-bold mt-2">PKR {product?.price}</p>
 
       {/* Changed <a> to <Link> for smoother navigation */}
       <Link to={`/product/${product?._id}`} id="view_btn" className="btn btn-block">

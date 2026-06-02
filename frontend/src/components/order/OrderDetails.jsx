@@ -107,7 +107,7 @@ const OrderDetails = () => {
             <div className="row my-5">
             <div className="col-4 col-lg-2">
               <img
-                src={item?.image}
+                src=  {item?.images?.url || item?.images}
                 alt={item?.name}
                 height="45"
                 width="65"
@@ -119,7 +119,7 @@ const OrderDetails = () => {
             </div>
 
             <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-              <p>${item?.price}</p>
+              <p>PKR {item?.price}</p>
             </div>
 
             <div className="col-4 col-lg-3 mt-4 mt-lg-0">
