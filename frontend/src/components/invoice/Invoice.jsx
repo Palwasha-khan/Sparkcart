@@ -110,7 +110,7 @@ const Invoice = () => {
 
               <tr>
                 <td colspan="4">
-                  <b>TAX 15%</b>
+                  <b>TAX 5%</b>
                 </td>
                 <td className="total">PKR {order?.taxAmount}</td>
               </tr>
