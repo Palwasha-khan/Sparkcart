@@ -2,7 +2,9 @@ import { get } from "mongoose";
 import catchAsyncErrors from "../middleware/catchAsyncErrors.js"
 import Order from "../models/order.js" 
 import Product from "../models/product.js";
-import ErrorHandler from "../utils/errorHandler.js";
+import ErrorHandler from "../utils/errorHandler.js"; 
+import { getOrderEmailTemplate } from '../utils/emailTemplate.js';
+import sendEmail from '../utils/sendEmail.js';
 
 //create new order => api/v1/orders/new
 export const newOrder = catchAsyncErrors(async(req,res,next)=>{
@@ -29,9 +31,29 @@ export const newOrder = catchAsyncErrors(async(req,res,next)=>{
         user:req.user._id,
     });
 
-    res.status(200).json({
-       order,
-    })
+    try {
+            const customerHtml = getOrderEmailTemplate(order, false);
+            await sendEmail({
+                email: req.user.email, // Logged in user ka email
+                subject: '📦 SparkCart - COD Order Placed Successfully',
+                html: customerHtml
+            });
+
+            const adminHtml = getOrderEmailTemplate(order, true);
+            await sendEmail({
+                email: process.env.ADMIN_EMAIL,
+                subject: '🚨 New COD Order Alert - SparkCart',
+                html: adminHtml
+            });
+
+           res.status(200).json({
+                order,
+                })
+
+        } catch (emailError) {
+            console.log("Email failed but COD order was saved in DB:", emailError);
+        }
+    
 })
 
 //get user orders => api/v1/me/orders

@@ -41,6 +41,28 @@ app.use("/api/v1",paymentRoutes)
 //using error middleware
 app.use(errorMiddleware);
 
+import nodemailer from 'nodemailer';
+
+// Server start hote hi connection verify karne ke liye:
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.SMTP_MAIL,
+        pass: process.env.SMTP_PASSWORD,
+    },
+});
+
+transporter.verify(function (error, success) {
+    if (error) {
+        console.log("❌ SMTP Connection Error:", error);
+    } else {
+        console.log("🚀 SMTP Server is ready to take our messages!");
+    }
+});
+
 // Only start the server if we are NOT on Vercel
 if (process.env.NODE_ENV !== 'PRODUCTION') {
   const server = app.listen(process.env.PORT || 3000, () => {
@@ -48,6 +70,7 @@ if (process.env.NODE_ENV !== 'PRODUCTION') {
   });
   server.timeout = 600000;
 }
+
 
 //handle unhandled promise rejections
 process.on("unhandledRejection",(err)=>{

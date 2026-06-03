@@ -2,6 +2,8 @@ import { resolve } from "dns";
 import catchAsyncErrors from "../middleware/catchAsyncErrors.js"
 import Stripe from "stripe";
 import order from "../models/order.js";
+import { getOrderEmailTemplate } from '../utils/emailTemplate.js';
+import sendEmail from '../utils/sendEmail.js';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);       
 
 //  Create Stripe checkout session => /api/v1/payment/checkout_session
@@ -123,6 +125,28 @@ export const stripeWebhook = catchAsyncErrors(async (req, res,next) => {
             };
             console.log(orderData)
             await order.create(orderData);
+            try {
+                    // 1. Client ko email bhejein (User confirmation)
+                    const customerHtml = getOrderEmailTemplate(newOrder, false);
+                    await sendEmail({
+                        email: session.customer_details?.email || req?.user?.email, // Customer email
+                        subject: '✨ SparkCart - Order Confirmation',
+                        html: customerHtml
+                    });
+
+                    // 2. Apne aap ko email bhejein (Admin notification)
+                    const adminHtml = getOrderEmailTemplate(newOrder, true);
+                    await sendEmail({
+                        email: process.env.ADMIN_EMAIL, // Aapka official email
+                        subject: '🚨 New Order Alert - SparkCart',
+                        html: adminHtml
+                    });
+
+                    console.log("Both order emails sent successfully!");
+                } catch (emailError) {
+                    console.log("Email sending failed but order was saved:", emailError);
+                    // Hum catch block khali rakhenge taake agar email fail bhi ho toh Stripe error na de
+                }
 
             // Here you can handle the successful payment, e.g., create an order in your database
         res.status(200).json({ received: true });
