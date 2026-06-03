@@ -124,10 +124,10 @@ export const stripeWebhook = catchAsyncErrors(async (req, res,next) => {
                 paymentMethod: "Card",
             };
             console.log(orderData)
-            await order.create(orderData);
+           const order =  await Order.create(orderData);
             try {
                     // 1. Client ko email bhejein (User confirmation)
-                    const customerHtml = getOrderEmailTemplate(newOrder, false);
+                    const customerHtml = getOrderEmailTemplate(order, false);
                     await sendEmail({
                         email: session.customer_details?.email || req?.user?.email, // Customer email
                         subject: '✨ SparkCart - Order Confirmation',
@@ -135,7 +135,7 @@ export const stripeWebhook = catchAsyncErrors(async (req, res,next) => {
                     });
 
                     // 2. Apne aap ko email bhejein (Admin notification)
-                    const adminHtml = getOrderEmailTemplate(newOrder, true);
+                    const adminHtml = getOrderEmailTemplate(order, true);
                     await sendEmail({
                         email: process.env.ADMIN_EMAIL, // Aapka official email
                         subject: '🚨 New Order Alert - SparkCart',
