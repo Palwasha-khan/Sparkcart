@@ -98,7 +98,41 @@ nav {
   color: #a31153;
 }
 
- 
+ /* 🌟 Custom Grid layout for displaying 5-6 products per row */
+.products-grid-layout {
+  display: grid;
+  /* Large screens par 5 products dikhaega, aap 5 ko badal kar 6 bhi kar sakti hain */
+  grid-template-columns: repeat(5, minmax(0, 1fr)); 
+  gap: 20px; /* Cards ke darmiyan spacing */
+  width: 100%;
+}
+
+/* responsive controls */
+@media (max-width: 1200px) {
+  .products-grid-layout {
+    grid-template-columns: repeat(4, minmax(0, 1fr)); /* Medium screens par 4 */
+  }
+}
+
+@media (max-width: 992px) {
+  .products-grid-layout {
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* Tablets par 3 */
+  }
+}
+
+@media (max-width: 576px) {
+  .products-grid-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Mobile par 2 */
+  }
+}
+
+/* 🌟 IMPORTANT: ProductItem ke andar lagi hui default Bootstrap padding/margins ko null karne ke liye */
+.products-grid-layout > div, 
+.products-grid-layout .card {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
 
 /* Home page */ 
 #products_heading {

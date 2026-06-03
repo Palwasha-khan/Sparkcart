@@ -39,11 +39,11 @@ const params = { page, keyword, min, max,category }
   return (
     <>
    <MetaData title="Buy Best Products Online" />
-      <div className="container">
+       
         <div className="row">
           
           {/* 1. Filter Sidebar: Removed the {keyword &&} check so it's always visible */}
-          <div className="col-12 col-md-3 mt-5">
+          <div className="col-12 col-md-3 ">
             <Filter />
           </div>
 
@@ -55,7 +55,7 @@ const params = { page, keyword, min, max,category }
                 : "Latest Products"}
             </h1>
             
-            <p className="text-center mx-auto mb-5" style={{ maxWidth: '600px', color: '#666', fontStyle: 'italic' }}>
+            <p className="text-center mx-auto  " style={{ maxWidth: '600px', color: '#666', fontStyle: 'italic' }}>
               Crafted with a pinch of sparkle and a whole lot of love, our latest collection is a 
               celebration of all things aesthetic. Discover unique, handcrafted pieces designed to make you glow.
             </p>
@@ -74,7 +74,7 @@ const params = { page, keyword, min, max,category }
             />
           </div>
         </div>
-      </div>
+      
     </>
   )
 }
