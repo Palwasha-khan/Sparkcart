@@ -1,7 +1,7 @@
 import { resolve } from "dns";
 import catchAsyncErrors from "../middleware/catchAsyncErrors.js"
 import Stripe from "stripe";
-import order from "../models/order.js";
+import Order from "../models/order.js";
 import { getOrderEmailTemplate } from '../utils/emailTemplate.js';
 import sendEmail from '../utils/sendEmail.js';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);       
