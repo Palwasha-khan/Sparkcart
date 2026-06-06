@@ -24,8 +24,7 @@ export const loginUser = catchAsyncErrors(async(req,res,next)=>{
     if(!email || !password){
         return next(new ErrorHandler('Please enter email & password', 400))
     }
-
-    //find user in the database
+ 
     const user = await User.findOne({ email}).select("+password")
 
    if (!user) { 
@@ -34,8 +33,7 @@ export const loginUser = catchAsyncErrors(async(req,res,next)=>{
  
 
 const isPasswordMatched = await user.comparePassword(password); 
-
-    //check if password is correct 
+ 
     if(!isPasswordMatched){
         return next(new ErrorHandler('Invalid  email & password', 401))
     }
@@ -80,8 +78,7 @@ export const getUserProfile = catchAsyncErrors(async(req,res,next) =>{
 //update password =>/api/v1/password/update
 export const updatePassword = catchAsyncErrors(async(req,res,next) =>{
     const user = await User.findById(req?.user?._id).select("+password");
-
-    //check the previous pass 
+ 
     const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
 
     if(!isPasswordMatched){
@@ -142,13 +139,10 @@ export const getUserDetail = catchAsyncErrors(async(req,res,next) =>{
 export const updateUser = catchAsyncErrors(async (req, res, next) => {
     const { name, email, role } = req.body;
  
-
-    // 1. You MUST define it here first
+ 
     const existingUser = await User.findOne({ email });
  
-    
-
-    // 3. The logic check
+     
     if (existingUser && existingUser._id.toString() !== req.params.id) {
         return next(new ErrorHandler("This email is already taken by another user", 400));
     }
@@ -175,8 +169,7 @@ export const deleteUser = catchAsyncErrors(async(req,res,next) =>{
     };
     if (user._id.toString() === req.user._id.toString()) {
         return next(new ErrorHandler("You cannot delete your own account", 400));
-    }
-   // Check if the user exists and has an avatar with a public_id
+    } 
         if (user?.avatar?.public_id) {
             try {
                 await delete_file(user.avatar.public_id);

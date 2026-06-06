@@ -93,8 +93,7 @@ export const allOrders = catchAsyncErrors(async(req,res,next)=>{
 
 //update orders - Admin => api/v1/admin/orders/:id
 export const updateOrders = catchAsyncErrors(async (req, res, next) => {
-    const order = await Order.findById(req.params.id); 
-    // Change this line to match your log: { orderStatus: 'Shipped' }
+    const order = await Order.findById(req.params.id);  
     const newStatus = req.body.orderStatus || req.body.status;
 
     if (!order) {
@@ -168,8 +167,7 @@ async function getSalesData(startDate, endDate) {
       }
     }
   ]);
-  
-  //create a map to staore sales data by date and num of order by data
+   
     const salesMap = new Map();
     let totalSales = 0;
     let totalNumOrders = 0; 
@@ -183,21 +181,18 @@ async function getSalesData(startDate, endDate) {
         totalSales += sales;
         totalNumOrders += orders;
     });
-
-    //generate array of dates between start and end date
+ 
     const datesbetween = getDatesBetween(startDate, endDate);
      
     //create funal sales data array with 0 array for dates with no sales
-    const finalSalesData = datesbetween.map((date) => {
-        // Get the data object for this specific date
+    const finalSalesData = datesbetween.map((date) => { 
         const dayData = salesMap.get(date); 
 
         return {
-            date,
-            // Use Nullish Coalescing (??). 
+            date, 
             // If dayData exists, take the value; otherwise, default to 0.
-            sales: dayData?.sales ?? 0,   // HIGHLIGHT: Fixed from undefined
-            orders: dayData?.orders ?? 0, // HIGHLIGHT: Fixed from undefined
+            sales: dayData?.sales ?? 0,    
+            orders: dayData?.orders ?? 0,  
         };
     }); 
     return { salesData: finalSalesData, totalSales, totalNumOrders };
@@ -207,16 +202,14 @@ function getDatesBetween(startDate, endDate) {
     const dates = [];
     const currentDate = new Date(startDate);
 
-    while (currentDate <= new Date(endDate)) {
-        // Using UTC methods ensures April 24 stays April 24 regardless of local time
+    while (currentDate <= new Date(endDate)) { 
         const yyyy = currentDate.getUTCFullYear();
         const mm = String(currentDate.getUTCMonth() + 1).padStart(2, '0');
         const dd = String(currentDate.getUTCDate()).padStart(2, '0');
         
         const formattedDate = `${yyyy}-${mm}-${dd}`;
         dates.push(formattedDate);
-        
-        // Move to the next day using UTC
+         
         currentDate.setUTCDate(currentDate.getUTCDate() + 1);
     }
 

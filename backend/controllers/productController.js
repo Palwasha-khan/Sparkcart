@@ -32,8 +32,6 @@ export const getProducts = catchAsyncErrors(async (req, res,next) => {
 });
 
 
-
-
 //create single products => /api/v1/products/:id
 export const getProductDeatils = catchAsyncErrors(async (req,res,next) => {
 
@@ -87,8 +85,7 @@ export const createProductReview = catchAsyncErrors(async (req, res, next) => {
 } else {
   product.reviews.push(review);
 }
-
-// ✅ ALWAYS update
+ 
 product.numOfReviews = product.reviews.length;
 
 product.rating =
@@ -125,29 +122,25 @@ export const deleteReview = catchAsyncErrors(async (req, res, next) => {
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
   }
-
-  // 1. Filter the reviews
+ 
   const filteredReviews = product.reviews.filter(
     (review) => review._id.toString() !== id.toString()
   );
-
-  // 2. Update the product object fields directly
+ 
   product.reviews = filteredReviews;
   product.numOfReviews = filteredReviews.length;
-
-  // 3. Recalculate ratings
+ 
   product.ratings =
     product.numOfReviews === 0
       ? 0
       : filteredReviews.reduce((acc, item) => acc + item.rating, 0) /
         product.numOfReviews;
-
-  // 4. 🔥 Use .save() instead of findByIdAndUpdate
+ 
   await product.save({ validateBeforeSave: false });
 
   res.status(200).json({
     success: true,
-    product // Send this back so you can see the change in Postman
+    product  
   });
 });
 
@@ -156,31 +149,26 @@ export const deleteReview = catchAsyncErrors(async (req, res, next) => {
 export const canUserReview = catchAsyncErrors(async (req, res, next) => {
   try {
     const { productId } = req.query;
-
-    // 1. Validation Check
+ 
     if (!productId) {
         return res.status(400).json({ message: "Product ID is required" });
     }
 
-   
-    // 2. Convert to ObjectId safely
+    
     const productObjectId = new mongoose.Types.ObjectId(productId);
-
-    // 3. Find Orders
+ 
     const orders = await Order.find({
       user: req.user._id,
       "orderItems.product": productObjectId,
     });
 
-    
-    // 4. Return Response
+     
     res.status(200).json({
       canReview: orders.length > 0,
     });
 
   } catch (error) {
-    console.error("Internal Function Error:", error.message);
-    // Pass the error to your global error handler
+    console.error("Internal Function Error:", error.message); 
     next(error); 
   }
 });
@@ -200,7 +188,6 @@ export const getAdminProducts = catchAsyncErrors(async (req,res,next) => {
     products,
   });
 })
-
 
 
 //create new products => /api/v1/admin/products
@@ -297,9 +284,7 @@ try {
     return next(new ErrorHandler("Upload to Cloudinary failed", 500));
   }
 });
-
-// Using the $pull operator is better than .filter() + .save() 
-// because it's a single database operation.
+ 
 export const deleteProductImage = catchAsyncErrors(async (req, res, next) => {
   let product = await Product.findById(req?.params?.id);
 
@@ -308,11 +293,9 @@ export const deleteProductImage = catchAsyncErrors(async (req, res, next) => {
   }
 
   const { imgId } = req.body; 
-
-  // 1. Delete from Cloudinary
+ 
   await delete_file(imgId);
-
-  // 2. Delete from MongoDB using $pull (This is the most reliable way)
+ 
   product = await Product.findByIdAndUpdate(
     req?.params?.id,
     {
@@ -322,7 +305,7 @@ export const deleteProductImage = catchAsyncErrors(async (req, res, next) => {
         },
       },
     },
-    { new: true } // Returns the updated document
+    { new: true }  
   );
  
 

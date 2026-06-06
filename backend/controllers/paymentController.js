@@ -126,7 +126,6 @@ export const stripeWebhook = catchAsyncErrors(async (req, res,next) => {
             console.log(orderData)
            const order =  await Order.create(orderData);
             try {
-                    // 1. Client ko email bhejein (User confirmation)
                     const customerHtml = getOrderEmailTemplate(order, false);
                     await sendEmail({
                         email: session.customer_details?.email || req?.user?.email, // Customer email
@@ -134,7 +133,6 @@ export const stripeWebhook = catchAsyncErrors(async (req, res,next) => {
                         html: customerHtml
                     });
 
-                    // 2. Apne aap ko email bhejein (Admin notification)
                     const adminHtml = getOrderEmailTemplate(order, true);
                     await sendEmail({
                         email: process.env.ADMIN_EMAIL, // Aapka official email
@@ -145,10 +143,8 @@ export const stripeWebhook = catchAsyncErrors(async (req, res,next) => {
                     console.log("Both order emails sent successfully!");
                 } catch (emailError) {
                     console.log("Email sending failed but order was saved:", emailError);
-                    // Hum catch block khali rakhenge taake agar email fail bhi ho toh Stripe error na de
                 }
 
-            // Here you can handle the successful payment, e.g., create an order in your database
         res.status(200).json({ received: true });
         }
     } catch (error) {
